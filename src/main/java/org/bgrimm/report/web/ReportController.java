@@ -93,9 +93,9 @@ public class ReportController {
 		Date minDate = null;
 
 		for (Saturation s : allList) {
-			BigDecimal v = s.getLength();
+			BigDecimal v = s.getValue();
 			if (total != null) {
-				total.add(v);
+				total=total.add(v);
 			} else {
 				total = v;
 			}
@@ -119,7 +119,6 @@ public class ReportController {
 			}
 
 		}
-
 		dto.setAvgValue(total.divide(new BigDecimal(allList.size()),3,BigDecimal.ROUND_HALF_DOWN));
 		dto.setMaxValue(max);
 		dto.setMaxDateTime(maxDate);
