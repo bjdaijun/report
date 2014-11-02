@@ -23,11 +23,11 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * @author Rob Winch
  */
-@Controller
-@RequestMapping("/")
+// @Controller
+// @RequestMapping("/")
 public class MessageController {
 
-	@RequestMapping
+	// @RequestMapping
 	public ModelAndView list() {
 		List messages = new ArrayList();
 		return new ModelAndView("messages/list", "messages", messages);

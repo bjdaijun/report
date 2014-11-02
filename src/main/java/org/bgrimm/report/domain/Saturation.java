@@ -6,9 +6,11 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
-@Entity(name = "tdm_saturation")
+@Entity
+@Table(name = "tdm_saturation")
 public class Saturation {
 	// @NotEmpty
 	// @Temporal(TemporalType.TIMESTAMP)
