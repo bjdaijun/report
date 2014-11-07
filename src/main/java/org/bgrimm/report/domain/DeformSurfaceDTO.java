@@ -5,36 +5,77 @@ import java.sql.Date;
 
 public class DeformSurfaceDTO {
 	private String name;
+
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public String toString() {
+		return "DeformSurfaceDTO [name=" + name + ", DN=" + DN + ", DE=" + DE
+				+ ", DH=" + DH + ", dateTime=" + dateTime + ", maxDH=" + maxDH
+				+ ", maxDE=" + maxDE + ", maxDN=" + maxDN + ", maxDateTime="
+				+ maxDateTime + ", minDH=" + minDH + ", minDE=" + minDE
+				+ ", minDN=" + minDN + ", minDateTime=" + minDateTime
+				+ ", avgDH=" + avgDH + ", avgDE=" + avgDE + ", avgDN=" + avgDN
+				+ ", avgDateTime=" + avgDateTime + "]";
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	private BigDecimal dN;
-	private BigDecimal dE;
-	private BigDecimal dH;
-	private Date dateTime;
+	private BigDecimal DN;
+	private BigDecimal DE;
+	private BigDecimal DH;
+	private String dateTime;
 
 	private BigDecimal maxDH;
 	private BigDecimal maxDE;
 	private BigDecimal maxDN;
-	private Date maxDateTime;
+	private String maxDateTime;
+
+	private BigDecimal minDH;
+	private BigDecimal minDE;
+	private BigDecimal minDN;
+	private String minDateTime;
+
+	public BigDecimal getMinDH() {
+		return minDH;
+	}
+
+	public void setMinDH(BigDecimal minDH) {
+		this.minDH = minDH;
+	}
+
+	public BigDecimal getMinDE() {
+		return minDE;
+	}
+
+	public void setMinDE(BigDecimal minDE) {
+		this.minDE = minDE;
+	}
+
+	public BigDecimal getMinDN() {
+		return minDN;
+	}
+
+	public void setMinDN(BigDecimal minDN) {
+		this.minDN = minDN;
+	}
+
+	public String getMinDateTime() {
+		return minDateTime;
+	}
+
+	public void setMinDateTime(String minDateTime) {
+		this.minDateTime = minDateTime;
+	}
 
 	private BigDecimal avgDH;
 	private BigDecimal avgDE;
 	private BigDecimal avgDN;
-	private Date avgDateTime;
-
-	public Date getDateTime() {
-		return dateTime;
-	}
-
-	public void setDateTime(Date dateTime) {
-		this.dateTime = dateTime;
-	}
+	private String avgDateTime;
 
 	public BigDecimal getMaxDH() {
 		return maxDH;
@@ -58,14 +99,6 @@ public class DeformSurfaceDTO {
 
 	public void setMaxDN(BigDecimal maxDN) {
 		this.maxDN = maxDN;
-	}
-
-	public Date getMaxDateTime() {
-		return maxDateTime;
-	}
-
-	public void setMaxDateTime(Date maxDateTime) {
-		this.maxDateTime = maxDateTime;
 	}
 
 	public BigDecimal getAvgDH() {
@@ -92,36 +125,52 @@ public class DeformSurfaceDTO {
 		this.avgDN = avgDN;
 	}
 
-	public Date getAvgDateTime() {
+	public String getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(String dateTime) {
+		this.dateTime = dateTime;
+	}
+
+	public String getMaxDateTime() {
+		return maxDateTime;
+	}
+
+	public void setMaxDateTime(String maxDateTime) {
+		this.maxDateTime = maxDateTime;
+	}
+
+	public String getAvgDateTime() {
 		return avgDateTime;
 	}
 
-	public void setAvgDateTime(Date avgDateTime) {
+	public void setAvgDateTime(String avgDateTime) {
 		this.avgDateTime = avgDateTime;
 	}
 
-	public BigDecimal getdN() {
-		return dN;
+	public BigDecimal getDN() {
+		return DN;
 	}
 
-	public void setdN(BigDecimal dN) {
-		this.dN = dN;
+	public void setDN(BigDecimal dN) {
+		DN = dN;
 	}
 
-	public BigDecimal getdE() {
-		return dE;
+	public BigDecimal getDE() {
+		return DE;
 	}
 
-	public void setdE(BigDecimal dE) {
-		this.dE = dE;
+	public void setDE(BigDecimal dE) {
+		DE = dE;
 	}
 
-	public BigDecimal getdH() {
-		return dH;
+	public BigDecimal getDH() {
+		return DH;
 	}
 
-	public void setdH(BigDecimal dH) {
-		this.dH = dH;
+	public void setDH(BigDecimal dH) {
+		DH = dH;
 	}
 
 }

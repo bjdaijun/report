@@ -6,11 +6,11 @@ import java.util.Date;
 public class SaturationDTO {
 	private String name;
 	private BigDecimal value;
-	private Date dateTime;
+	private String dateTime;
 	private BigDecimal maxValue;
-	private Date maxDateTime;
+	private String maxDateTime;
 	private BigDecimal minValue;
-	private Date minDateTime;
+	private String minDateTime;
 	private BigDecimal avgValue;
 
 	public String getName() {
@@ -29,11 +29,12 @@ public class SaturationDTO {
 		this.value = value;
 	}
 
-	public Date getDateTime() {
+
+	public String getDateTime() {
 		return dateTime;
 	}
 
-	public void setDateTime(Date dateTime) {
+	public void setDateTime(String dateTime) {
 		this.dateTime = dateTime;
 	}
 
@@ -45,11 +46,11 @@ public class SaturationDTO {
 		this.maxValue = maxValue;
 	}
 
-	public Date getMaxDateTime() {
+	public String getMaxDateTime() {
 		return maxDateTime;
 	}
 
-	public void setMaxDateTime(Date maxDateTime) {
+	public void setMaxDateTime(String maxDateTime) {
 		this.maxDateTime = maxDateTime;
 	}
 
@@ -61,11 +62,11 @@ public class SaturationDTO {
 		this.minValue = minValue;
 	}
 
-	public Date getMinDateTime() {
+	public String getMinDateTime() {
 		return minDateTime;
 	}
 
-	public void setMinDateTime(Date minDateTime) {
+	public void setMinDateTime(String minDateTime) {
 		this.minDateTime = minDateTime;
 	}
 

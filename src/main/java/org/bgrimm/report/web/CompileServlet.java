@@ -24,6 +24,7 @@
 package org.bgrimm.report.web;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
@@ -109,12 +110,14 @@ public class CompileServlet {
 		response.setContentType("text/html");
 //		PrintWriter out = response.getWriter();
 		try {
-			JasperReport report = JasperCompileManager
-					.compileReport(CompileServlet.class
-							.getResourceAsStream("/reports/WebappReport.jrxml"));
+//			JasperReport report = JasperCompileManager
+//					.compileReport(CompileServlet.class
+//							.getResourceAsStream("/reports/WebappReport.jrxml"));
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("ReportTitle", "Address Report");
-			JasperPrint jasperPrint = JasperFillManager.fillReport(report,
+			
+			InputStream is=Compiler.class.getResourceAsStream("/reports/WebappReport.jasper");
+			JasperPrint jasperPrint = JasperFillManager.fillReport(is,
 					parameters, new WebappDataSource());
 			request.getSession().setAttribute(
 					BaseHttpServlet.DEFAULT_JASPER_PRINT_SESSION_ATTRIBUTE,

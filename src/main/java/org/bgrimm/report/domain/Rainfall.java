@@ -18,6 +18,13 @@ public class Rainfall {
 		return id;
 	}
 
+	@Override
+	public String toString() {
+		return "Rainfall [id=" + id + ", dateTime=" + dateTime
+				+ ", monitoringPosition=" + monitoringPosition + ", value="
+				+ value + ", acc=" + acc + "]";
+	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
