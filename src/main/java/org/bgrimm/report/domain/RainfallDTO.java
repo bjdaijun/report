@@ -12,14 +12,13 @@ public class RainfallDTO {
 				+ ", totalTime=" + totalTime + "]";
 	}
 
+	private String name="";
+	private String dateTime="";
 
-	private String name;
-	private String dateTime;
+	private String value="";
 
-	private BigDecimal value;
-
-	private BigDecimal maxValue;
-	private String maxDateTime;
+	private String maxValue="";
+	private String maxDateTime="";
 
 	public String getName() {
 		return name;
@@ -37,22 +36,6 @@ public class RainfallDTO {
 		this.dateTime = dateTime;
 	}
 
-	public BigDecimal getValue() {
-		return value;
-	}
-
-	public void setValue(BigDecimal value) {
-		this.value = value;
-	}
-
-	public BigDecimal getMaxValue() {
-		return maxValue;
-	}
-
-	public void setMaxValue(BigDecimal maxValue) {
-		this.maxValue = maxValue;
-	}
-
 	public String getMaxDateTime() {
 		return maxDateTime;
 	}
@@ -61,24 +44,38 @@ public class RainfallDTO {
 		this.maxDateTime = maxDateTime;
 	}
 
-	public BigDecimal getTotalValue() {
+	public String getTotalTime() {
+		return totalTime;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public String getMaxValue() {
+		return maxValue;
+	}
+
+	public void setMaxValue(String maxValue) {
+		this.maxValue = maxValue;
+	}
+
+	public String getTotalValue() {
 		return totalValue;
 	}
 
-	public void setTotalValue(BigDecimal totalValue) {
+	public void setTotalValue(String totalValue) {
 		this.totalValue = totalValue;
-	}
-
-
-	public String getTotalTime() {
-		return totalTime;
 	}
 
 	public void setTotalTime(String totalTime) {
 		this.totalTime = totalTime;
 	}
 
-
-	private BigDecimal totalValue;
-	private String totalTime;
+	private String totalValue="";
+	private String totalTime="";
 }

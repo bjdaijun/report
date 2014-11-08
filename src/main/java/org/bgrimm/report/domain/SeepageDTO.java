@@ -5,14 +5,14 @@ import java.math.BigDecimal;
 public class SeepageDTO {
 
 	private String name;
-	private String dateTime;
-	private BigDecimal value;
-	private BigDecimal maxValue;
-	private String maxDateTime;
-	private BigDecimal minValue;
-	private String minDateTime;
-	private BigDecimal avgValue;
-	private BigDecimal totalValue;
+	private String dateTime="";
+	private String value="";
+	private String maxValue="";
+	private String maxDateTime="";
+	private String minValue="";
+	private String minDateTime="";
+	private String avgValue="";
+	private String totalValue="";
 
 	public String getName() {
 		return name;
@@ -30,36 +30,12 @@ public class SeepageDTO {
 		this.dateTime = dateTime;
 	}
 
-	public BigDecimal getValue() {
-		return value;
-	}
-
-	public void setValue(BigDecimal value) {
-		this.value = value;
-	}
-
-	public BigDecimal getMaxValue() {
-		return maxValue;
-	}
-
-	public void setMaxValue(BigDecimal maxValue) {
-		this.maxValue = maxValue;
-	}
-
 	public String getMaxDateTime() {
 		return maxDateTime;
 	}
 
 	public void setMaxDateTime(String maxDateTime) {
 		this.maxDateTime = maxDateTime;
-	}
-
-	public BigDecimal getMinValue() {
-		return minValue;
-	}
-
-	public void setMinValue(BigDecimal minValue) {
-		this.minValue = minValue;
 	}
 
 	public String getMinDateTime() {
@@ -70,19 +46,44 @@ public class SeepageDTO {
 		this.minDateTime = minDateTime;
 	}
 
-	public BigDecimal getAvgValue() {
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public String getMaxValue() {
+		return maxValue;
+	}
+
+	public void setMaxValue(String maxValue) {
+		this.maxValue = maxValue;
+	}
+
+	public String getMinValue() {
+		return minValue;
+	}
+
+	public void setMinValue(String minValue) {
+		this.minValue = minValue;
+	}
+
+	public String getAvgValue() {
 		return avgValue;
 	}
 
-	public void setAvgValue(BigDecimal avgValue) {
+	public void setAvgValue(String avgValue) {
 		this.avgValue = avgValue;
 	}
 
-	public BigDecimal getTotalValue() {
+	public String getTotalValue() {
 		return totalValue;
 	}
 
-	public void setTotalValue(BigDecimal totalValue) {
+	public void setTotalValue(String totalValue) {
 		this.totalValue = totalValue;
 	}
+
 }

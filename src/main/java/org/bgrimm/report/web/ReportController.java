@@ -175,7 +175,7 @@ public class ReportController {
 			SaturationDTO dto = new SaturationDTO();
 			dto.setName(point.getName());
 			dto.setDateTime(DateUtil.date2String(s.getDateTime()));
-			dto.setValue(s.getValue());
+			dto.setValue(s.getValue().toString());
 
 			List<DeformInternal> allList = deforminternalService
 					.findByPositionAndDateTimeBewteen((int) point.getId(),
@@ -234,10 +234,10 @@ public class ReportController {
 
 		}
 		dto.setAvgValue(total.divide(new BigDecimal(allList.size()), 2,
-				BigDecimal.ROUND_HALF_DOWN));
-		dto.setMaxValue(max);
+				BigDecimal.ROUND_HALF_DOWN).toString());
+		dto.setMaxValue(max.toString());
 		dto.setMaxDateTime(DateUtil.date2String(maxDate));
-		dto.setMinValue(min);
+		dto.setMinValue(min.toString());
 		dto.setMinDateTime(DateUtil.date2String(minDate));
 
 	}
@@ -294,7 +294,7 @@ public class ReportController {
 			SaturationDTO dto = new SaturationDTO();
 			dto.setName(point.getName());
 			dto.setDateTime(DateUtil.date2String(b.getDateTime()));
-			dto.setValue(b.getValue());
+			dto.setValue(b.getValue().toString());
 			List<BeachFreeHeight> list = beachfreeheightService
 					.findByPositionAndDateTimeBewteen((int) point.getId(),
 							startTime, endTime);
@@ -346,10 +346,10 @@ public class ReportController {
 
 		}
 		dto.setAvgValue(total.divide(new BigDecimal(list.size()), 2,
-				BigDecimal.ROUND_HALF_DOWN));
-		dto.setMaxValue(max);
+				BigDecimal.ROUND_HALF_DOWN).toString());
+		dto.setMaxValue(max.toString());
 		dto.setMaxDateTime(DateUtil.date2String(maxDate));
-		dto.setMinValue(min);
+		dto.setMinValue(min.toString());
 		dto.setMinDateTime(DateUtil.date2String(minDate));
 
 	}
@@ -379,7 +379,7 @@ public class ReportController {
 					.findLatestByPosition((int) point.getId());
 			SeepageDTO dto = new SeepageDTO();
 			dto.setName(point.getName());
-			dto.setValue(s.getValue());
+			dto.setValue(s.getValue().toString());
 
 			List list = seepageServcie.findByPositionAndDateTimeBewteen(
 					(int) point.getId(), startTime, endTime);
@@ -434,18 +434,20 @@ public class ReportController {
 			}
 		}
 
-		dto.setMaxValue(max);
+		dto.setMaxValue(max.toString());
 		dto.setMaxDateTime(DateUtil.date2String(maxDateTime));
 		dto.setMinDateTime(DateUtil.date2String(minDateTime));
-		dto.setMinValue(min);
+		dto.setMinValue(min.toString());
 
 		dto.setAvgValue(total.divide(new BigDecimal(list.size()), 2,
-				BigDecimal.ROUND_HALF_DOWN));
+				BigDecimal.ROUND_HALF_DOWN).toString());
 
 		DateTime d1 = new DateTime(startTime);
 		DateTime d2 = new DateTime(endTime);
 		long seconds = (d2.getMillis() - d1.getMillis()) / 1000L;
-		dto.setTotalValue(dto.getAvgValue().multiply(new BigDecimal(seconds)));
+		dto.setTotalValue((total.divide(new BigDecimal(list.size()), 2,
+				BigDecimal.ROUND_HALF_DOWN).multiply(new BigDecimal(seconds)))
+				.toString());
 	}
 
 	private JRBeanCollectionDataSource getAlarmrecordDatasource(Date startTime,
@@ -467,7 +469,7 @@ public class ReportController {
 			// + point.getName()+"</style>");
 			dto.setLevel("<style backcolor=\"" + a.getLevel().getCode() + "\">"
 					+ a.getLevel().getName() + "</style>");
-			dto.setValue(a.getAlarmValue());
+			dto.setValue(a.getAlarmValue().toString());
 			dto.setThreshold("");
 			dto.setHandle("");
 			result.add(dto);
@@ -497,7 +499,7 @@ public class ReportController {
 			SaturationDTO dto = new SaturationDTO();
 			dto.setName(point.getName());
 			dto.setDateTime(DateUtil.date2String(b.getDateTime()));
-			dto.setValue(b.getValue());
+			dto.setValue(b.getValue().toString());
 			List<BeachCrestHeight> list = beachcrestheightService
 					.findByPositionAndDateTimeBewteen((int) point.getId(),
 							startTime, endTime);
@@ -548,10 +550,10 @@ public class ReportController {
 
 		}
 		dto.setAvgValue(total.divide(new BigDecimal(list.size()), 2,
-				BigDecimal.ROUND_HALF_DOWN));
-		dto.setMaxValue(max);
+				BigDecimal.ROUND_HALF_DOWN).toString());
+		dto.setMaxValue(max.toString());
 		dto.setMaxDateTime(DateUtil.date2String(maxDate));
-		dto.setMinValue(min);
+		dto.setMinValue(min.toString());
 		dto.setMinDateTime(DateUtil.date2String(minDate));
 
 	}
@@ -582,7 +584,7 @@ public class ReportController {
 			SaturationDTO dto = new SaturationDTO();
 			dto.setName(point.getName());
 			dto.setDateTime(DateUtil.date2String(b.getDateTime()));
-			dto.setValue(b.getValue());
+			dto.setValue(b.getValue().toString());
 			List<BeachLength> list = beachlengthService
 					.findByPositionAndDateTimeBewteen((int) point.getId(),
 							startTime, endTime);
@@ -634,10 +636,10 @@ public class ReportController {
 
 		}
 		dto.setAvgValue(total.divide(new BigDecimal(list.size()), 2,
-				BigDecimal.ROUND_HALF_DOWN));
-		dto.setMaxValue(max);
+				BigDecimal.ROUND_HALF_DOWN).toString());
+		dto.setMaxValue(max.toString());
 		dto.setMaxDateTime(DateUtil.date2String(maxDate));
-		dto.setMinValue(min);
+		dto.setMinValue(min.toString());
 		dto.setMinDateTime(DateUtil.date2String(minDate));
 	}
 
@@ -691,7 +693,7 @@ public class ReportController {
 					.getId());
 			WaterLevelDTO dto = new WaterLevelDTO();
 			dto.setName(point.getName());
-			dto.setValue(w.getValue());
+			dto.setValue(w.getValue().toString());
 			dto.setDateTime(DateUtil.date2String(w.getDateTime()));
 			List<WaterLevel> list = waterlevelService
 					.findByPositionAndDateTimeBewteen((int) point.getId(),
@@ -720,9 +722,9 @@ public class ReportController {
 			// dto.setName("<style backcolor=\"yellow\" isBold=\"true\" isItalic=\"true\">"
 			// + point.getName()+"</style>");
 			dto.setName(point.getName());
-			dto.setDE(deformSurface.getdE());
-			dto.setDN(deformSurface.getdN());
-			dto.setDH(deformSurface.getdH());
+			dto.setDE(deformSurface.getdE().toString());
+			dto.setDN(deformSurface.getdN().toString());
+			dto.setDH(deformSurface.getdH().toString());
 			dto.setDateTime(DateUtil.date2String(deformSurface.getDateTime()));
 
 			List<DeformSurface> list = deformsurfaceService
@@ -749,7 +751,7 @@ public class ReportController {
 			RainfallDTO dto = new RainfallDTO();
 
 			dto.setName(point.getName());
-			dto.setValue(rain.getValue());
+			dto.setValue(rain.getValue().toString());
 			dto.setDateTime(DateUtil.date2String(rain.getDateTime()));
 			dto.setTotalTime(new DateTime(startTime)
 					.toString("yyyy-MM-dd HH:mm:ss")
@@ -791,7 +793,7 @@ public class ReportController {
 
 		}
 
-		dto.setTotalValue(total);
+		dto.setTotalValue(total.toString());
 
 		BigDecimal max = null;
 		String maxDateTime = null;
@@ -807,7 +809,7 @@ public class ReportController {
 			}
 
 		}
-		dto.setMaxValue(max);
+		dto.setMaxValue(max.toString());
 		dto.setMaxDateTime(maxDateTime);
 		System.out.println(dto);
 	}
@@ -829,7 +831,7 @@ public class ReportController {
 			SaturationDTO dto = new SaturationDTO();
 			dto.setName(point.getName());
 			dto.setDateTime(DateUtil.date2String(s.getDateTime()));
-			dto.setValue(s.getValue());
+			dto.setValue(s.getValue().toString());
 
 			List<Saturation> allList = saturationService
 					.findByPositionAndDateTimeBewteen((int) point.getId(),
@@ -846,6 +848,19 @@ public class ReportController {
 	private void calculateDeformsurface(DeformSurfaceDTO dto,
 			List<DeformSurface> list) {
 		if (list.size() == 0) {
+			dto.setAvgDE("");
+			dto.setAvgDN("");
+			dto.setAvgDH("");
+
+			dto.setMaxDE("");
+			dto.setMaxDN("");
+			dto.setMaxDH("");
+			dto.setMaxDateTime("");
+
+			dto.setMinDE("");
+			dto.setMinDN("");
+			dto.setMinDH("");
+			dto.setMinDateTime("");
 			return;
 		}
 		DeformSurfaceValue cur = null;
@@ -900,21 +915,27 @@ public class ReportController {
 
 		}
 		// ///
-		dto.setAvgDE(total.getDe().divide(new BigDecimal(list.size()), 1,
-				BigDecimal.ROUND_HALF_DOWN));
-		dto.setAvgDN(total.getDn().divide(new BigDecimal(list.size()), 1,
-				BigDecimal.ROUND_HALF_DOWN));
-		dto.setAvgDH(total.getDh().divide(new BigDecimal(list.size()), 1,
-				BigDecimal.ROUND_HALF_DOWN));
+		dto.setAvgDE(total
+				.getDe()
+				.divide(new BigDecimal(list.size()), 1,
+						BigDecimal.ROUND_HALF_DOWN).toString());
+		dto.setAvgDN(total
+				.getDn()
+				.divide(new BigDecimal(list.size()), 1,
+						BigDecimal.ROUND_HALF_DOWN).toString());
+		dto.setAvgDH(total
+				.getDh()
+				.divide(new BigDecimal(list.size()), 1,
+						BigDecimal.ROUND_HALF_DOWN).toString());
 
-		dto.setMaxDE(max.getDe());
-		dto.setMaxDN(max.getDn());
-		dto.setMaxDH(max.getDh());
+		dto.setMaxDE(max.getDe().toString());
+		dto.setMaxDN(max.getDn().toString());
+		dto.setMaxDH(max.getDh().toString());
 		dto.setMaxDateTime(DateUtil.date2String(max.getDateTime()));
 
-		dto.setMinDE(min.getDe());
-		dto.setMinDN(min.getDn());
-		dto.setMinDH(min.getDh());
+		dto.setMinDE(min.getDe().toString());
+		dto.setMinDN(min.getDn().toString());
+		dto.setMinDH(min.getDh().toString());
 		dto.setMinDateTime(DateUtil.date2String(min.getDateTime()));
 	}
 
@@ -984,10 +1005,10 @@ public class ReportController {
 
 		}
 		dto.setAvgValue(total.divide(new BigDecimal(list.size()), 3,
-				BigDecimal.ROUND_HALF_DOWN));
-		dto.setMaxValue(max);
+				BigDecimal.ROUND_HALF_DOWN).toString());
+		dto.setMaxValue(max.toString());
 		dto.setMaxDateTime(DateUtil.date2String(maxDate));
-		dto.setMinValue(min);
+		dto.setMinValue(min.toString());
 		dto.setMinDateTime(DateUtil.date2String(minDate));
 
 	}
@@ -1032,10 +1053,10 @@ public class ReportController {
 
 		}
 		dto.setAvgValue(total.divide(new BigDecimal(allList.size()), 3,
-				BigDecimal.ROUND_HALF_DOWN));
-		dto.setMaxValue(max);
+				BigDecimal.ROUND_HALF_DOWN).toString());
+		dto.setMaxValue(max.toString());
 		dto.setMaxDateTime(DateUtil.date2String(maxDate));
-		dto.setMinValue(min);
+		dto.setMinValue(min.toString());
 		dto.setMinDateTime(DateUtil.date2String(minDate));
 	}
 

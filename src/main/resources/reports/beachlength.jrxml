@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 5.6.1.final using JasperReports Library version 5.6.1  -->
-<!-- 2014-11-05T21:46:15 -->
+<!-- 2014-11-09T00:31:11 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="beachlength" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="20" bottomMargin="0" uuid="49395e74-00b3-4fbe-ab87-0ea3c2bd5eae">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="javabeans_ds"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -18,13 +18,13 @@
 	<field name="name" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="value" class="java.math.BigDecimal"/>
+	<field name="value" class="java.lang.String"/>
 	<field name="dateTime" class="java.lang.String"/>
-	<field name="maxValue" class="java.math.BigDecimal"/>
+	<field name="maxValue" class="java.lang.String"/>
 	<field name="maxDateTime" class="java.lang.String"/>
-	<field name="minValue" class="java.math.BigDecimal"/>
+	<field name="minValue" class="java.lang.String"/>
 	<field name="minDateTime" class="java.lang.String"/>
-	<field name="avgValue" class="java.math.BigDecimal"/>
+	<field name="avgValue" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -304,7 +304,7 @@
 					<bottomPen lineWidth="0.3"/>
 					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{maxValue}]]></textFieldExpression>
@@ -321,7 +321,7 @@
 					<bottomPen lineWidth="0.3"/>
 					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dateTime}]]></textFieldExpression>
@@ -337,7 +337,7 @@
 					<bottomPen lineWidth="0.3"/>
 					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{value}]]></textFieldExpression>
@@ -355,7 +355,7 @@
 					<bottomPen lineWidth="0.3"/>
 					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{minDateTime}]]></textFieldExpression>
@@ -372,7 +372,7 @@
 					<bottomPen lineWidth="0.3"/>
 					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{maxDateTime}]]></textFieldExpression>
@@ -390,7 +390,7 @@
 					<bottomPen lineWidth="0.3"/>
 					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{minValue}]]></textFieldExpression>
@@ -407,7 +407,7 @@
 					<bottomPen lineWidth="0.3"/>
 					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{avgValue}]]></textFieldExpression>
@@ -423,7 +423,7 @@
 					<bottomPen lineWidth="0.3"/>
 					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font fontName="AR PL KaitiM GB" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>

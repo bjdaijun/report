@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 5.6.1.final using JasperReports Library version 5.6.1  -->
-<!-- 2014-11-06T22:44:24 -->
+<!-- 2014-11-09T00:32:40 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rainfall" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9984e59c-a596-4d87-a2aa-f81d3f57fc0d">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="javabeans_ds"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -18,11 +18,11 @@
 	<field name="name" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="value" class="java.math.BigDecimal"/>
+	<field name="value" class="java.lang.String"/>
 	<field name="dateTime" class="java.lang.String"/>
-	<field name="maxValue" class="java.math.BigDecimal"/>
+	<field name="maxValue" class="java.lang.String"/>
 	<field name="maxDateTime" class="java.lang.String"/>
-	<field name="totalValue" class="java.math.BigDecimal"/>
+	<field name="totalValue" class="java.lang.String"/>
 	<field name="totalTime" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -268,7 +268,7 @@
 					<bottomPen lineWidth="0.3"/>
 					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{maxDateTime}]]></textFieldExpression>
@@ -283,7 +283,7 @@
 					<bottomPen lineWidth="0.3"/>
 					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{maxValue}]]></textFieldExpression>
@@ -301,7 +301,7 @@
 					<bottomPen lineWidth="0.3"/>
 					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totalValue}]]></textFieldExpression>
@@ -317,7 +317,7 @@
 					<bottomPen lineWidth="0.3"/>
 					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font fontName="AR PL KaitiM GB" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
@@ -334,7 +334,7 @@
 					<bottomPen lineWidth="0.3"/>
 					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dateTime}]]></textFieldExpression>
@@ -350,7 +350,7 @@
 					<bottomPen lineWidth="0.3"/>
 					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{value}]]></textFieldExpression>
@@ -368,7 +368,7 @@
 					<bottomPen lineWidth="0.3"/>
 					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totalTime}]]></textFieldExpression>

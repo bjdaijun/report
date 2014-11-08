@@ -1,7 +1,5 @@
 package org.bgrimm.report.domain;
 
-import java.math.BigDecimal;
-import java.sql.Date;
 
 public class DeformSurfaceDTO {
 	private String name;
@@ -25,44 +23,20 @@ public class DeformSurfaceDTO {
 		this.name = name;
 	}
 
-	private BigDecimal DN;
-	private BigDecimal DE;
-	private BigDecimal DH;
-	private String dateTime;
+	private String DN="";
+	private String DE="";
+	private String DH="";
+	private String dateTime="";
 
-	private BigDecimal maxDH;
-	private BigDecimal maxDE;
-	private BigDecimal maxDN;
-	private String maxDateTime;
+	private String maxDH="";
+	private String maxDE="";
+	private String maxDN="";
+	private String maxDateTime="";
 
-	private BigDecimal minDH;
-	private BigDecimal minDE;
-	private BigDecimal minDN;
-	private String minDateTime;
-
-	public BigDecimal getMinDH() {
-		return minDH;
-	}
-
-	public void setMinDH(BigDecimal minDH) {
-		this.minDH = minDH;
-	}
-
-	public BigDecimal getMinDE() {
-		return minDE;
-	}
-
-	public void setMinDE(BigDecimal minDE) {
-		this.minDE = minDE;
-	}
-
-	public BigDecimal getMinDN() {
-		return minDN;
-	}
-
-	public void setMinDN(BigDecimal minDN) {
-		this.minDN = minDN;
-	}
+	private String minDH="";
+	private String minDE="";
+	private String minDN="";
+	private String minDateTime="";
 
 	public String getMinDateTime() {
 		return minDateTime;
@@ -72,58 +46,10 @@ public class DeformSurfaceDTO {
 		this.minDateTime = minDateTime;
 	}
 
-	private BigDecimal avgDH;
-	private BigDecimal avgDE;
-	private BigDecimal avgDN;
-	private String avgDateTime;
-
-	public BigDecimal getMaxDH() {
-		return maxDH;
-	}
-
-	public void setMaxDH(BigDecimal maxDH) {
-		this.maxDH = maxDH;
-	}
-
-	public BigDecimal getMaxDE() {
-		return maxDE;
-	}
-
-	public void setMaxDE(BigDecimal maxDE) {
-		this.maxDE = maxDE;
-	}
-
-	public BigDecimal getMaxDN() {
-		return maxDN;
-	}
-
-	public void setMaxDN(BigDecimal maxDN) {
-		this.maxDN = maxDN;
-	}
-
-	public BigDecimal getAvgDH() {
-		return avgDH;
-	}
-
-	public void setAvgDH(BigDecimal avgDH) {
-		this.avgDH = avgDH;
-	}
-
-	public BigDecimal getAvgDE() {
-		return avgDE;
-	}
-
-	public void setAvgDE(BigDecimal avgDE) {
-		this.avgDE = avgDE;
-	}
-
-	public BigDecimal getAvgDN() {
-		return avgDN;
-	}
-
-	public void setAvgDN(BigDecimal avgDN) {
-		this.avgDN = avgDN;
-	}
+	private String avgDH="";
+	private String avgDE="";
+	private String avgDN="";
+	private String avgDateTime="";
 
 	public String getDateTime() {
 		return dateTime;
@@ -149,28 +75,100 @@ public class DeformSurfaceDTO {
 		this.avgDateTime = avgDateTime;
 	}
 
-	public BigDecimal getDN() {
+	public String getDN() {
 		return DN;
 	}
 
-	public void setDN(BigDecimal dN) {
+	public void setDN(String dN) {
 		DN = dN;
 	}
 
-	public BigDecimal getDE() {
+	public String getDE() {
 		return DE;
 	}
 
-	public void setDE(BigDecimal dE) {
+	public void setDE(String dE) {
 		DE = dE;
 	}
 
-	public BigDecimal getDH() {
+	public String getDH() {
 		return DH;
 	}
 
-	public void setDH(BigDecimal dH) {
+	public void setDH(String dH) {
 		DH = dH;
+	}
+
+	public String getMaxDH() {
+		return maxDH;
+	}
+
+	public void setMaxDH(String maxDH) {
+		this.maxDH = maxDH;
+	}
+
+	public String getMaxDE() {
+		return maxDE;
+	}
+
+	public void setMaxDE(String maxDE) {
+		this.maxDE = maxDE;
+	}
+
+	public String getMaxDN() {
+		return maxDN;
+	}
+
+	public void setMaxDN(String maxDN) {
+		this.maxDN = maxDN;
+	}
+
+	public String getMinDH() {
+		return minDH;
+	}
+
+	public void setMinDH(String minDH) {
+		this.minDH = minDH;
+	}
+
+	public String getMinDE() {
+		return minDE;
+	}
+
+	public void setMinDE(String minDE) {
+		this.minDE = minDE;
+	}
+
+	public String getMinDN() {
+		return minDN;
+	}
+
+	public void setMinDN(String minDN) {
+		this.minDN = minDN;
+	}
+
+	public String getAvgDH() {
+		return avgDH;
+	}
+
+	public void setAvgDH(String avgDH) {
+		this.avgDH = avgDH;
+	}
+
+	public String getAvgDE() {
+		return avgDE;
+	}
+
+	public void setAvgDE(String avgDE) {
+		this.avgDE = avgDE;
+	}
+
+	public String getAvgDN() {
+		return avgDN;
+	}
+
+	public void setAvgDN(String avgDN) {
+		this.avgDN = avgDN;
 	}
 
 }

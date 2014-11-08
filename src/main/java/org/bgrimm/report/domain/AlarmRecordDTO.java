@@ -4,13 +4,13 @@ import java.math.BigDecimal;
 
 public class AlarmRecordDTO {
 	private Integer ind;
-	private String type;
-	private String point;
-	private String time;
-	private BigDecimal value;
-	private String threshold;
-	private String level;
-	private String handle;
+	private String type="";
+	private String point="";
+	private String time="";
+	private String value="";
+	private String threshold="";
+	private String level="";
+	private String handle="";
 
 	public Integer getInd() {
 		return ind;
@@ -44,11 +44,12 @@ public class AlarmRecordDTO {
 		this.time = time;
 	}
 
-	public BigDecimal getValue() {
+
+	public String getValue() {
 		return value;
 	}
 
-	public void setValue(BigDecimal value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 
