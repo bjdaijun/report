@@ -16,9 +16,17 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.HtmlExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleHtmlExporterOutput;
 import net.sf.jasperreports.j2ee.servlets.BaseHttpServlet;
+import net.sf.jasperreports.j2ee.servlets.DocxServlet;
+import net.sf.jasperreports.j2ee.servlets.ImageServlet;
 import net.sf.jasperreports.j2ee.servlets.PdfServlet;
+import net.sf.jasperreports.j2ee.servlets.PptxServlet;
+import net.sf.jasperreports.j2ee.servlets.XlsxServlet;
+import net.sf.jasperreports.web.util.WebHtmlResourceHandler;
 
 import org.bgrimm.report.DateUtil;
 import org.bgrimm.report.domain.AlarmRecord;
@@ -57,6 +65,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -105,10 +114,11 @@ public class ReportController {
 		binder.registerCustomEditor(Date.class, new DateEditor());
 	}
 
-	@RequestMapping("html")
+	@RequestMapping("{type}")
 	public void html(HttpServletRequest req, HttpServletResponse rep,
 			@RequestParam Date startTime, @RequestParam Date endTime,
-			@RequestParam String reportTitle) throws Exception {
+			@RequestParam String reportTitle, @PathVariable String type)
+			throws Exception {
 		rep.setContentType("text/html");
 		Map<String, Object> parameters = new HashMap<String, Object>();
 
@@ -145,8 +155,29 @@ public class ReportController {
 		req.getSession().setAttribute(
 				BaseHttpServlet.DEFAULT_JASPER_PRINT_SESSION_ATTRIBUTE,
 				jasperPrint);
-		PdfServlet s = new PdfServlet();
-		s.service(req, rep);
+		if ("pdf".equals(type)) {
+			PdfServlet s = new PdfServlet();
+			s.service(req, rep);
+		} else if ("html".equals(type)) {
+			HtmlExporter exporter = new HtmlExporter();
+			exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+			SimpleHtmlExporterOutput output = new SimpleHtmlExporterOutput(
+					rep.getOutputStream());
+			output.setImageHandler(new WebHtmlResourceHandler("image?image={0}"));
+			exporter.setExporterOutput(output);
+
+			exporter.exportReport();
+		} else if ("xlsx".equals(type)) {
+			XlsxServlet servlet = new XlsxServlet();
+			servlet.service(req, rep);
+		} else if ("docx".equals(type)) {
+			DocxServlet s = new DocxServlet();
+			s.service(req, rep);
+		} else if ("pptx".equals(type)) {
+			PptxServlet s = new PptxServlet();
+			s.service(req, rep);
+		}
+
 	}
 
 	private void addDeforminternalReport(Map<String, Object> parameters,
