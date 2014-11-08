@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SeepageRepository extends CrudRepository<Seepage, Long> {
 
-	List<Seepage> findByMonitoringPositionAndDateTimeBetween(Integer position,
+	List<Seepage> findByMonitoringPositionAndDateTimeBetweenOrderByDateTimeAsc(Integer position,
 			Date startTime, Date endTime);
 
 	Page<Seepage> findByMonitoringPosition(Integer position,

@@ -91,6 +91,14 @@ public class AlarmRecord {
 	@JoinColumn(name = "alarm_level_id")
 	private TDMAlarmLevel level;
 
+	public TDMAlarmLevel getLevel() {
+		return level;
+	}
+
+	public void setLevel(TDMAlarmLevel level) {
+		this.level = level;
+	}
+
 	public boolean getClosed() {
 		return closed;
 	}

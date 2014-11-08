@@ -21,9 +21,12 @@ import net.sf.jasperreports.j2ee.servlets.BaseHttpServlet;
 import net.sf.jasperreports.j2ee.servlets.PdfServlet;
 
 import org.bgrimm.report.DateUtil;
+import org.bgrimm.report.domain.AlarmRecord;
+import org.bgrimm.report.domain.AlarmRecordDTO;
 import org.bgrimm.report.domain.BeachCrestHeight;
 import org.bgrimm.report.domain.BeachFreeHeight;
 import org.bgrimm.report.domain.BeachLength;
+import org.bgrimm.report.domain.DeformInternal;
 import org.bgrimm.report.domain.DeformSurface;
 import org.bgrimm.report.domain.DeformSurfaceDTO;
 import org.bgrimm.report.domain.DeformSurfaceValue;
@@ -31,13 +34,17 @@ import org.bgrimm.report.domain.Rainfall;
 import org.bgrimm.report.domain.RainfallDTO;
 import org.bgrimm.report.domain.Saturation;
 import org.bgrimm.report.domain.SaturationDTO;
+import org.bgrimm.report.domain.Seepage;
+import org.bgrimm.report.domain.SeepageDTO;
 import org.bgrimm.report.domain.TDMPoint;
 import org.bgrimm.report.domain.TDMType;
 import org.bgrimm.report.domain.WaterLevel;
 import org.bgrimm.report.domain.WaterLevelDTO;
+import org.bgrimm.report.service.AlarmrecordService;
 import org.bgrimm.report.service.BeachFreeHeightService;
 import org.bgrimm.report.service.BeachcrestheightService;
 import org.bgrimm.report.service.BeachlengthService;
+import org.bgrimm.report.service.DeforminternalService;
 import org.bgrimm.report.service.DeformsurfaceService;
 import org.bgrimm.report.service.RainfallService;
 import org.bgrimm.report.service.SaturationService;
@@ -46,9 +53,7 @@ import org.bgrimm.report.service.TDMPointService;
 import org.bgrimm.report.service.TDMTypeService;
 import org.bgrimm.report.service.WaterLevelService;
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.datetime.standard.DateTimeFormatterFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -72,6 +77,9 @@ public class ReportController {
 	private DeformsurfaceService deformsurfaceService;
 
 	@Autowired
+	private DeforminternalService deforminternalService;
+
+	@Autowired
 	private WaterLevelService waterlevelService;
 
 	@Autowired
@@ -87,6 +95,9 @@ public class ReportController {
 
 	@Autowired
 	private SeepageService seepageServcie;
+
+	@Autowired
+	private AlarmrecordService alarmService;
 
 	@InitBinder
 	protected void initBinder(HttpServletRequest request,
@@ -106,20 +117,26 @@ public class ReportController {
 		parameters.put("endTime", DateUtil.date2String(endTime));
 
 		JRBeanCollectionDataSource ds = createMasterDS();
-		//表面位移
+		// 表面位移
 		addDeformsurfaceReport(parameters, startTime, endTime);
-		//浸润线
+		// 浸润线
 		addSaturationReport(parameters, startTime, endTime);
-		//库水位
+		// 库水位
 		addWaterlevelReport(parameters, startTime, endTime);
-		//降雨量
+		// 降雨量
 		addRainfallReport(parameters, startTime, endTime);
-		//干滩长度
+		// 干滩长度
 		addBeachlengthReport(parameters, startTime, endTime);
-		//滩顶高程
+		// 滩顶高程
 		addBeachcrestheightReport(parameters, startTime, endTime);
-		//安全超高
+		// 安全超高
 		addBeachfreeheightReport(parameters, startTime, endTime);
+		// 渗流量
+		addSeepageReport(parameters, startTime, endTime);
+		// 报警
+		addAlarmrecordReport(parameters, startTime, endTime);
+		// 内部位移
+		addDeforminternalReport(parameters, startTime, endTime);
 
 		InputStream is = ReportController.class
 				.getResourceAsStream("/reports/Master.jasper");
@@ -130,6 +147,125 @@ public class ReportController {
 				jasperPrint);
 		PdfServlet s = new PdfServlet();
 		s.service(req, rep);
+	}
+
+	private void addDeforminternalReport(Map<String, Object> parameters,
+			Date startTime, Date endTime) throws JRException {
+
+		InputStream is2 = ReportController.class
+				.getResourceAsStream("/reports/deforminternal.jasper");
+		JasperReport sub2 = (JasperReport) JRLoader.loadObject(is2);
+
+		JRBeanCollectionDataSource ds = getDeforminternalDatasource(startTime,
+				endTime);
+		parameters.put("dsDeforminternal", ds);
+		parameters.put("deforminternalReport", sub2);
+
+	}
+
+	private JRBeanCollectionDataSource getDeforminternalDatasource(
+			Date startTime, Date endTime) {
+		TDMType type = tdmTypeService.findByType("INTERNAL_DISP");
+
+		List<TDMPoint> pointList = pointService.findByType(type);
+		List result = new ArrayList();
+		for (TDMPoint point : pointList) {
+			DeformInternal s = deforminternalService
+					.findLatestByPosition((int) point.getId());
+			SaturationDTO dto = new SaturationDTO();
+			dto.setName(point.getName());
+			dto.setDateTime(DateUtil.date2String(s.getDateTime()));
+			dto.setValue(s.getValue());
+
+			List<DeformInternal> allList = deforminternalService
+					.findByPositionAndDateTimeBewteen((int) point.getId(),
+							startTime, endTime);
+
+			calculateDeforminternal(dto, allList);
+			result.add(dto);
+		}
+		if (result.size() == 0) {
+			SaturationDTO dto = new SaturationDTO();
+			dto.setName("无记录");
+			result.add(dto);
+		}
+		System.out.println(result);
+		JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(result,
+				false);
+		return ds;
+	}
+
+	private void calculateDeforminternal(SaturationDTO dto,
+			List<DeformInternal> allList) {
+		if (allList.size() == 0) {
+			return;
+		}
+		BigDecimal total = null;
+		BigDecimal max = null;
+		Date maxDate = null;
+		BigDecimal min = null;
+		Date minDate = null;
+
+		for (DeformInternal s : allList) {
+			BigDecimal v = s.getValue();
+			if (total != null) {
+				total = total.add(v);
+			} else {
+				total = v;
+			}
+			if (max == null) {
+				max = v;
+				maxDate = s.getDateTime();
+			} else {
+				if (v.compareTo(max) > 0) {
+					max = v;
+					maxDate = s.getDateTime();
+				}
+			}
+			if (min == null) {
+				min = v;
+				minDate = s.getDateTime();
+			} else {
+				if (v.compareTo(min) < 0) {
+					min = v;
+					minDate = s.getDateTime();
+				}
+			}
+
+		}
+		dto.setAvgValue(total.divide(new BigDecimal(allList.size()), 2,
+				BigDecimal.ROUND_HALF_DOWN));
+		dto.setMaxValue(max);
+		dto.setMaxDateTime(DateUtil.date2String(maxDate));
+		dto.setMinValue(min);
+		dto.setMinDateTime(DateUtil.date2String(minDate));
+
+	}
+
+	private void addAlarmrecordReport(Map<String, Object> parameters,
+			Date startTime, Date endTime) throws JRException {
+		InputStream is2 = ReportController.class
+				.getResourceAsStream("/reports/alarmrecord.jasper");
+		JasperReport sub2 = (JasperReport) JRLoader.loadObject(is2);
+
+		JRBeanCollectionDataSource ds = getAlarmrecordDatasource(startTime,
+				endTime);
+		parameters.put("dsAlarmrecord", ds);
+		parameters.put("alarmrecordReport", sub2);
+
+	}
+
+	private void addSeepageReport(Map<String, Object> parameters,
+			Date startTime, Date endTime) throws JRException {
+
+		InputStream is2 = ReportController.class
+				.getResourceAsStream("/reports/seepage.jasper");
+		JasperReport sub2 = (JasperReport) JRLoader.loadObject(is2);
+
+		JRBeanCollectionDataSource ds = getSeepageDatasource(startTime, endTime);
+		parameters.put("dsSeepage", ds);
+		parameters.put("seepageReport", sub2);
+
 	}
 
 	private void addBeachfreeheightReport(Map<String, Object> parameters,
@@ -173,7 +309,9 @@ public class ReportController {
 
 	private void calculateBeachFreeHeight(SaturationDTO dto,
 			List<BeachFreeHeight> list) {
-
+		if (list.size() == 0) {
+			return;
+		}
 		BigDecimal total = null;
 		BigDecimal max = null;
 		Date maxDate = null;
@@ -230,9 +368,125 @@ public class ReportController {
 
 	}
 
+	private JRBeanCollectionDataSource getSeepageDatasource(Date startTime,
+			Date endTime) {
+
+		TDMType type = tdmTypeService.findByType("SEEPAGE_FLOW");
+		List<TDMPoint> pointList = pointService.findByType(type);
+		List result = new ArrayList();
+		for (TDMPoint point : pointList) {
+			Seepage s = seepageServcie
+					.findLatestByPosition((int) point.getId());
+			SeepageDTO dto = new SeepageDTO();
+			dto.setName(point.getName());
+			dto.setValue(s.getValue());
+
+			List list = seepageServcie.findByPositionAndDateTimeBewteen(
+					(int) point.getId(), startTime, endTime);
+
+			calculateSeepage(dto, list, startTime, endTime);
+			result.add(dto);
+		}
+
+		if (result.size() == 0) {
+			SeepageDTO dto = new SeepageDTO();
+			dto.setName("无记录");
+			result.add(dto);
+		}
+		JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(result,
+				false);
+		return ds;
+	}
+
+	private void calculateSeepage(SeepageDTO dto, List<Seepage> list,
+			Date startTime, Date endTime) {
+		if (list.size() == 0) {
+			return;
+		}
+		BigDecimal max = null;
+		BigDecimal min = null;
+		Date maxDateTime = null;
+		Date minDateTime = null;
+		BigDecimal total = null;
+		for (Seepage s : list) {
+			if (max == null) {
+				max = s.getValue();
+				maxDateTime = s.getDateTime();
+			} else {
+				if (max.compareTo(s.getValue()) < 0) {
+					max = s.getValue();
+					maxDateTime = s.getDateTime();
+				}
+			}
+			if (min == null) {
+				min = s.getValue();
+				minDateTime = s.getDateTime();
+			} else {
+				if (min.compareTo(s.getValue()) > 0) {
+					min = s.getValue();
+					minDateTime = s.getDateTime();
+				}
+			}
+			if (total == null) {
+				total = s.getValue();
+			} else {
+				total = total.add(s.getValue());
+			}
+		}
+
+		dto.setMaxValue(max);
+		dto.setMaxDateTime(DateUtil.date2String(maxDateTime));
+		dto.setMinDateTime(DateUtil.date2String(minDateTime));
+		dto.setMinValue(min);
+
+		dto.setAvgValue(total.divide(new BigDecimal(list.size()), 2,
+				BigDecimal.ROUND_HALF_DOWN));
+
+		DateTime d1 = new DateTime(startTime);
+		DateTime d2 = new DateTime(endTime);
+		long seconds = (d2.getMillis() - d1.getMillis()) / 1000L;
+		dto.setTotalValue(dto.getAvgValue().multiply(new BigDecimal(seconds)));
+	}
+
+	private JRBeanCollectionDataSource getAlarmrecordDatasource(Date startTime,
+			Date endTime) {
+
+		List<AlarmRecord> list = alarmService.findAlarmRecordByTimeBetween(
+				startTime, endTime);
+		int i = 0;
+		List<AlarmRecordDTO> result = new ArrayList();
+		for (AlarmRecord a : list) {
+			AlarmRecordDTO dto = new AlarmRecordDTO();
+			dto.setInd(++i);
+			dto.setType(a.getType().getName());
+			dto.setPoint(a.getPoint().getName());
+			dto.setTime(DateUtil.date2String(a.getEventTime()));
+			// <style backcolor="yellow" isBold="true" isItalic="true">Styled
+			// text</style>
+			// dto.setName("<style backcolor=\"yellow\" isBold=\"true\" isItalic=\"true\">"
+			// + point.getName()+"</style>");
+			dto.setLevel("<style backcolor=\"" + a.getLevel().getCode() + "\">"
+					+ a.getLevel().getName() + "</style>");
+			dto.setValue(a.getAlarmValue());
+			dto.setThreshold("");
+			dto.setHandle("");
+			result.add(dto);
+			System.out.println(dto);
+		}
+		if (result.size() == 0) {
+			AlarmRecordDTO dto = new AlarmRecordDTO();
+			dto.setInd(1);
+			dto.setType("无记录");
+			result.add(dto);
+		}
+
+		JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(result,
+				false);
+		return ds;
+	}
+
 	private JRBeanCollectionDataSource getBeachCrestHeightDatasource(
 			Date startTime, Date endTime) {
-
 		TDMType type = tdmTypeService.findByType("BEACH_CREST_HEIGHT");
 		List<TDMPoint> pointList = pointService.findByType(type);
 		List result = new ArrayList();
@@ -257,6 +511,9 @@ public class ReportController {
 
 	private void calculateBeachCrestHeight(SaturationDTO dto,
 			List<BeachCrestHeight> list) {
+		if (list.size() == 0) {
+			return;
+		}
 		BigDecimal total = null;
 		BigDecimal max = null;
 		Date maxDate = null;
@@ -339,6 +596,9 @@ public class ReportController {
 	}
 
 	private void calculateBeachLength(SaturationDTO dto, List<BeachLength> list) {
+		if (list.size() == 0) {
+			return;
+		}
 
 		BigDecimal total = null;
 		BigDecimal max = null;
@@ -455,7 +715,10 @@ public class ReportController {
 			DeformSurface deformSurface = deformsurfaceService
 					.findLatestByPosition((int) point.getId());
 			DeformSurfaceDTO dto = new DeformSurfaceDTO();
-
+			// <style backcolor="yellow" isBold="true" isItalic="true">Styled
+			// text</style>
+			// dto.setName("<style backcolor=\"yellow\" isBold=\"true\" isItalic=\"true\">"
+			// + point.getName()+"</style>");
 			dto.setName(point.getName());
 			dto.setDE(deformSurface.getdE());
 			dto.setDN(deformSurface.getdN());
@@ -506,7 +769,9 @@ public class ReportController {
 
 	private void calculateRainfall(RainfallDTO dto, List<Rainfall> list) {
 		BigDecimal total = null;
-
+		if (list.size() == 0) {
+			return;
+		}
 		Map<String, BigDecimal> map = new HashMap();
 		for (Rainfall rain : list) {
 			DateTime t = new DateTime(rain.getDateTime());
@@ -533,11 +798,11 @@ public class ReportController {
 		for (String t : map.keySet()) {
 			if (max == null) {
 				max = map.get(t);
-				maxDateTime = t+":00:00";
+				maxDateTime = t + ":00:00";
 			} else {
 				if (max.compareTo(map.get(t)) < 0) {
 					max = map.get(t);
-					maxDateTime = t+":00:00";
+					maxDateTime = t + ":00:00";
 				}
 			}
 
@@ -580,6 +845,9 @@ public class ReportController {
 
 	private void calculateDeformsurface(DeformSurfaceDTO dto,
 			List<DeformSurface> list) {
+		if (list.size() == 0) {
+			return;
+		}
 		DeformSurfaceValue cur = null;
 		DeformSurfaceValue max = null;
 		DeformSurfaceValue min = null;
@@ -679,7 +947,9 @@ public class ReportController {
 	}
 
 	private void calculateWaterLevel(WaterLevelDTO dto, List<WaterLevel> list) {
-
+		if (list.size() == 0) {
+			return;
+		}
 		BigDecimal total = null;
 		BigDecimal max = null;
 		Date maxDate = null;
@@ -723,6 +993,11 @@ public class ReportController {
 	}
 
 	private void calculateSaturation(SaturationDTO dto, List<Saturation> allList) {
+
+		if (allList.size() == 0) {
+			return;
+		}
+
 		BigDecimal total = null;
 		BigDecimal max = null;
 		Date maxDate = null;

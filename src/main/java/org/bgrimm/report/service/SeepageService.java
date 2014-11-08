@@ -29,7 +29,7 @@ public class SeepageService {
 			Date endTime) {
 		
 		
-		return dao.findByMonitoringPositionAndDateTimeBetween(position,startTime,
+		return dao.findByMonitoringPositionAndDateTimeBetweenOrderByDateTimeAsc(position,startTime,
 				endTime);
 	}
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 5.6.1.final using JasperReports Library version 5.6.1  -->
-<!-- 2014-11-07T19:24:43 -->
+<!-- 2014-11-07T22:47:03 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Master" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="307d6387-7d13-4abd-9d4c-2bb9d0f2fd0c">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -31,6 +31,10 @@
 	<parameter name="dsBeachfreeheight" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<parameter name="seepageReport" class="net.sf.jasperreports.engine.JasperReport"/>
 	<parameter name="dsSeepage" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="alarmrecordReport" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="dsAlarmrecord" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="deforminternalReport" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="dsDeforminternal" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -38,7 +42,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="699" splitType="Stretch">
+		<band height="801" splitType="Stretch">
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
@@ -138,12 +142,44 @@
 				<subreportExpression><![CDATA[$P{beachcrestheightReport}]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement positionType="Float" x="-1" y="440" width="555" height="60" uuid="ee3dbdd4-e791-47ea-96c4-184ce9c16fad">
+				<reportElement positionType="Float" x="0" y="440" width="555" height="60" uuid="ee3dbdd4-e791-47ea-96c4-184ce9c16fad">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<dataSourceExpression><![CDATA[$P{dsBeachfreeheight}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{beachfreeheightReport}]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="500" width="555" height="60" uuid="6addf32d-552f-4388-92b0-df1cdc011b8d">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<dataSourceExpression><![CDATA[$P{dsSeepage}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{seepageReport}]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="560" width="555" height="60" uuid="f8224d41-da89-4b81-90aa-9f917ec7f329">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<dataSourceExpression><![CDATA[$P{dsAlarmrecord}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{alarmrecordReport}]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="620" width="555" height="60" uuid="d00faa4b-e5f7-406e-b741-66ce0579e375">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<dataSourceExpression><![CDATA[$P{dsDeforminternal}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{deforminternalReport}]]></subreportExpression>
 			</subreport>
 		</band>
 	</title>
