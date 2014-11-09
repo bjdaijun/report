@@ -213,12 +213,12 @@ public class ReportController {
 			calculateDeforminternal(dto, allList);
 			result.add(dto);
 		}
-		if (result.size() == 0) {
-			SaturationDTO dto = new SaturationDTO();
-			dto.setName("无记录");
-			result.add(dto);
-		}
-		System.out.println(result);
+//		if (result.size() == 0) {
+//			SaturationDTO dto = new SaturationDTO();
+//			dto.setName("无记录");
+//			result.add(dto);
+//		}
+//		System.out.println(result);
 		JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(result,
 				false);
 		return ds;
@@ -417,11 +417,11 @@ public class ReportController {
 			result.add(dto);
 		}
 
-		if (result.size() == 0) {
-			SeepageDTO dto = new SeepageDTO();
-			dto.setName("无记录");
-			result.add(dto);
-		}
+//		if (result.size() == 0) {
+//			SeepageDTO dto = new SeepageDTO();
+//			dto.setName("无记录");
+//			result.add(dto);
+//		}
 		JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(result,
 				false);
 		return ds;
@@ -504,12 +504,12 @@ public class ReportController {
 			result.add(dto);
 			System.out.println(dto);
 		}
-		if (result.size() == 0) {
-			AlarmRecordDTO dto = new AlarmRecordDTO();
-			dto.setInd(1);
-			dto.setType("无记录");
-			result.add(dto);
-		}
+//		if (result.size() == 0) {
+//			AlarmRecordDTO dto = new AlarmRecordDTO();
+//			dto.setInd(1);
+//			dto.setType("无记录");
+//			result.add(dto);
+//		}
 
 		JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(result,
 				false);
