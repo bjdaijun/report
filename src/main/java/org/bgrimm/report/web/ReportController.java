@@ -22,7 +22,6 @@ import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleHtmlExporterOutput;
 import net.sf.jasperreports.j2ee.servlets.BaseHttpServlet;
 import net.sf.jasperreports.j2ee.servlets.DocxServlet;
-import net.sf.jasperreports.j2ee.servlets.ImageServlet;
 import net.sf.jasperreports.j2ee.servlets.PdfServlet;
 import net.sf.jasperreports.j2ee.servlets.PptxServlet;
 import net.sf.jasperreports.j2ee.servlets.XlsxServlet;
@@ -67,7 +66,6 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/")
@@ -114,10 +112,10 @@ public class ReportController {
 		binder.registerCustomEditor(Date.class, new DateEditor());
 	}
 
-	@RequestMapping("{type}")
-	public void html(HttpServletRequest req, HttpServletResponse rep,
-			@RequestParam Date startTime, @RequestParam Date endTime,
-			@RequestParam String reportTitle, @PathVariable String type)
+	@RequestMapping("{reportTitle}/{startTime}/{endTime}/{type}")
+	public void report(HttpServletRequest req, HttpServletResponse rep,
+			@PathVariable Date startTime, @PathVariable Date endTime,
+			@PathVariable String reportTitle, @PathVariable String type)
 			throws Exception {
 		rep.setContentType("text/html");
 		Map<String, Object> parameters = new HashMap<String, Object>();
@@ -1091,9 +1089,5 @@ public class ReportController {
 		dto.setMinDateTime(DateUtil.date2String(minDate));
 	}
 
-	@RequestMapping("pdf")
-	public void pdf() {
-
-	}
 
 }
